@@ -26,8 +26,8 @@ The visualisation begins with an overview of the global human day, then explores
 - `js/`  
   Contains all JavaScript files for the d3.js visualisations and Scrollama-based interactions used in the article.
 
-* `.github/workflows/pages.yml`
-  GitHub Actions workflow used to deploy the static site to GitHub Pages.
+* `.github/workflows/`
+  Contains the GitHub Actions workflow used to deploy the static site to GitHub Pages.
 
 ## Technologies used
 
