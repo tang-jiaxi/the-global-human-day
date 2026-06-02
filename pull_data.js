@@ -136,7 +136,6 @@ async function getCountryIncomeData() {
         countryName: record.name || record.id,
         incomeLevel,
         economicStatus: getEconomicStatus(incomeLevel),
-        isDeveloping: getIsDeveloping(incomeLevel),
       };
     }
   }
@@ -146,7 +145,7 @@ async function getCountryIncomeData() {
 
 function getEconomicStatus(incomeLevel) {
   if (!incomeLevel || incomeLevel === "Not classified") {
-    return "Not classified";
+    return "";
   }
 
   if (incomeLevel === "High income") {
@@ -154,18 +153,6 @@ function getEconomicStatus(incomeLevel) {
   }
 
   return "Developing";
-}
-
-function getIsDeveloping(incomeLevel) {
-  if (!incomeLevel || incomeLevel === "Not classified") {
-    return "";
-  }
-
-  if (incomeLevel === "High income") {
-    return "FALSE";
-  }
-
-  return "TRUE";
 }
 
 function addColumnIfMissing(headers, columnName) {
@@ -189,19 +176,16 @@ async function main() {
   const gdpPerCapitaColumn = "gdp_per_capita_2023_current_usd";
   const incomeLevelColumn = "world_bank_income_level";
   const economicStatusColumn = "economic_status";
-  const isDevelopingColumn = "is_developing";
 
   addColumnIfMissing(headers, countryNameColumn);
   addColumnIfMissing(headers, gdpPerCapitaColumn);
   addColumnIfMissing(headers, incomeLevelColumn);
   addColumnIfMissing(headers, economicStatusColumn);
-  addColumnIfMissing(headers, isDevelopingColumn);
 
   const countryNameIndex = headers.indexOf(countryNameColumn);
   const gdpPerCapitaIndex = headers.indexOf(gdpPerCapitaColumn);
   const incomeLevelIndex = headers.indexOf(incomeLevelColumn);
   const economicStatusIndex = headers.indexOf(economicStatusColumn);
-  const isDevelopingIndex = headers.indexOf(isDevelopingColumn);
 
   console.log("Fetching 2023 GDP per capita data from World Bank...");
   const gdpPerCapitaByCountryISO = await getGDPPerCapitaData();
@@ -227,7 +211,7 @@ async function main() {
 
     const gdpPerCapita = gdpPerCapitaByCountryISO[countryISO];
     const incomeData =
-      incomeDataByCountryISO[countryISO] || MANUAL_COUNTRY_DATA[countryISO];
+      MANUAL_COUNTRY_DATA[countryISO] || incomeDataByCountryISO[countryISO];
 
     if (gdpPerCapita !== undefined) {
       row[gdpPerCapitaIndex] = gdpPerCapita;
@@ -240,7 +224,6 @@ async function main() {
       row[countryNameIndex] = incomeData.countryName;
       row[incomeLevelIndex] = incomeData.incomeLevel;
       row[economicStatusIndex] = getEconomicStatus(incomeData.incomeLevel);
-      row[isDevelopingIndex] = getIsDeveloping(incomeData.incomeLevel);
       matchedIncomeCount++;
 
       outputRows.push(row);
