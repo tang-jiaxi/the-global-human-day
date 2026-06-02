@@ -10,6 +10,20 @@ const svg = chart
 
 const color = d3.scaleOrdinal(d3.schemeTableau10);
 
+const tooltip = d3
+  .select("body")
+  .append("div")
+  .style("position", "fixed")
+  .style("z-index", "9999")
+  .style("display", "none")
+  .style("background", "rgba(255,255,255,0.96)")
+  .style("padding", "10px 14px")
+  .style("border-radius", "10px")
+  .style("box-shadow", "0 4px 18px rgba(0,0,0,0.15)")
+  .style("line-height", "1.25")
+  .style("pointer-events", "none")
+  .style("font-family", "'Oswald', sans-serif");
+
 d3.csv("global_human_day.csv", d3.autoType).then((data) => {
   const root = d3
     .hierarchy({
@@ -33,19 +47,40 @@ d3.csv("global_human_day.csv", d3.autoType).then((data) => {
 
   nodes
     .append("rect")
+    .attr("class", "treemap-rect")
     .attr("width", (d) => d.x1 - d.x0)
     .attr("height", (d) => d.y1 - d.y0)
     .attr("rx", 8)
     .attr("fill", (d) => color(d.data.name))
-    .attr("opacity", 0.9);
+    .attr("opacity", 0.9)
+    .style("cursor", "pointer")
+    .on("mouseenter", function (event, d) {
+      d3.select(this)
+        .attr("opacity", 1)
+        .attr("stroke", "#111")
+        .attr("stroke-width", 2)
+        .raise();
 
-  nodes.append("title").text(
-    (d) =>
-      `${formatLabel(d.data.name)}
-          ${d.data.value} hours/day
-          ${Math.round(d.data.value * 60)} min/day
-          Uncertainty: ±${d.data.uncertainty}`,
-  );
+      tooltip
+        .style("display", "block")
+        .style("left", `${event.clientX}px`)
+        .style("top", `${event.clientY - 14}px`).html(`
+          <div style="font-size:18px; font-weight:500">${formatLabel(d.data.name)}</div>
+          <div style="font-size:16px; font-weight:200">${Number(d.data.value).toFixed(2)} hours/day</div>
+          <div style="font-size:16px; font-weight:200">${Math.round(d.data.value * 60)} min/day</div>
+          <div style="font-size:16px; font-weight:200">Uncertainty: ±${d.data.uncertainty}</div>
+        `);
+    })
+    .on("mousemove", function (event) {
+      tooltip
+        .style("left", `${event.clientX}px`)
+        .style("top", `${event.clientY - 14}px`);
+    })
+    .on("mouseleave", function () {
+      d3.select(this).attr("opacity", 0.9).attr("stroke", "none");
+
+      tooltip.style("display", "none");
+    });
 
   chart
     .selectAll(".treemap-label")
@@ -66,18 +101,18 @@ d3.csv("global_human_day.csv", d3.autoType).then((data) => {
       if (rectWidth < 75 || rectHeight < 50) return "";
 
       return `
-          <div class="font-medium leading-tight text-black text-[clamp(0.65rem,1.1vw,1.25rem)]">
-            ${formatLabel(d.data.name)}
-          </div>
-          <div class="mt-1 font-light leading-tight text-black/80 text-[clamp(0.55rem,0.85vw,0.95rem)]">
-            ${Math.round(d.data.value * 60)} min/day
-          </div>
-        `;
+        <div class="font-medium leading-tight text-black text-large">
+          ${formatLabel(d.data.name)}
+        </div>
+        <div class="mt-1 font-light leading-tight text-black/80 text-medium">
+          ${Math.round(d.data.value * 60)} min/day
+        </div>
+      `;
     });
 });
 
 function formatLabel(text) {
-  return text
+  return String(text)
     .replaceAll("_", " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
