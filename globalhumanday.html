@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>The Global Human Day</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;350;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style type="text/css">
+      h1 {
+        font-family: "Oswald", sans-serif;
+        font-weight: 500;
+        margin: 0 auto;
+        line-height: 1;
+      }
+      h2 {
+        font-family: "Oswald", sans-serif;
+        font-weight: 500;
+        line-height: 1;
+        font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+      }
+      p {
+        font-family: "Oswald", sans-serif;
+        font-weight: 200;
+        line-height: 125%;
+        font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+      }
+      body {
+        padding: 5vh 10vw;
+        font-family: "Oswald", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Article Title -->
+    <div class="mx-auto w-fit">
+      <h1 class="font-medium text-[clamp(3rem,10vw,10rem)]">
+        THE GLOBAL HUMAN DAY
+      </h1>
+      <p class="ml-4 mt-3">How does the average human spend their day?</p>
+    </div>
+
+    <!-- Tree Diagram -->
+    <div id="chart" class="relative mt-16 w-full aspect-[1100/720]"></div>
+    <script src="js/treemap.js"></script>
+    <p class="mt-4 w-2/3 mx-auto">
+      According to a paper published in 2023, this is precisely how.
+    </p>
+    <p class="my-20 w-2/3 mx-auto">
+      Across the world, nearly 8 billion people divide their lives into the same
+      fixed container: 24 hours a day. That limit makes time one of humanity’s
+      most important constraints. Every choice about how people sleep, work,
+      eat, move, care, socialize, or rest shapes what is possible at a global
+      scale. How they are spent shapes not only individual lives, but also
+      economies, societies, and environmental change across borders.
+    </p>
+
+    <!-- Time by population -->
+    <div id="region-bubbles" class="relative w-full aspect-[1100/800]"></div>
+    <script src="js/regionBubbles.js"></script>
+    <p class="mt-6 w-fit mx-auto">
+      With 8 billion people in the world, humanity has 190 billion hours to
+      spend every day.
+    </p>
+
+    <!-- Bee swarm -->
+    <h2 class="mt-40 font-medium text-[clamp(2rem,5vw,5rem)] text-center">
+      The Administrative Tax
+    </h2>
+    <section id="allocation-section" class="relative min-h-[300vh]">
+      <div class="sticky top-0 h-screen flex items-center justify-center">
+        <div
+          id="allocation-beeswarm"
+          class="relative w-full aspect-[1100/620]"
+        ></div>
+      </div>
+
+      <div class="relative z-30 -mt-[100vh] pb-[80vh] pointer-events-none">
+        <p
+          class="allocation-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="0"
+        >
+          Wealthier developed countries spend dramatically more time allocating
+          daily life logistics, perhaps the main bureaucratic overhead of modern
+          life.
+        </p>
+
+        <p
+          class="allocation-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="1"
+        >
+          Developing countries like India and Pakistan spend much less time
+          managing life.
+        </p>
+
+        <div class="allocation-step  mx-auto mb-[80vh] flex w-fit items-center gap-[4vw] bg-white/90 px-6 py-3 data-step="2">
+          
+          <!-- Legend -->
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#4c78a8]"></span>
+            <p class="text-2xl">Developed</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#f58518]"></span>
+            <p class="text-2xl">Developing</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#bab0ac]"></span>
+            <p class="text-2xl">Not classified</p>
+          </div>
+
+        </div>
+   
+      </div>
+    </section>
+    <script src="js/beeSwarm.js"></script>
+
+    <!-- Scatter + Cleveland Plot -->
+    <h2
+      class="mt-32 mb-10 text-center font-medium leading-none text-[clamp(2rem,5vw,5rem)]"
+    >
+      What Gets Displaced?
+    </h2>
+
+    <section id="tradeoff-section" class="relative min-h-[300vh]">
+      <div class="sticky top-0 h-screen flex items-center justify-center">
+        <div
+          id="tradeoff-scatter"
+          class="relative w-full aspect-[1100/700]"
+        ></div>
+      </div>
+
+      <div class="relative z-30 -mt-[100vh] pb-[80vh] pointer-events-none">
+        <p
+          class="tradeoff-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="0"
+        >
+          In wealthier countries, time spent on everyday logistics often share a
+          negative relationship with social time.
+        </p>
+
+        <p
+          class="tradeoff-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="1"
+        >
+          Unsurprisingly, developing countries like India, Lebanon, and Morocco
+          that saved on the allocation time often socialized more.
+        </p>
+
+        <div
+          class="tradeoff-step mx-auto mb-[80vh] flex w-fit items-center gap-[4vw] bg-white/90 px-6 py-3 text-base"
+          data-step="2"
+        >
+          
+          <!-- Legend -->
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#4c78a8]"></span>
+            <p class="text-2xl">Developed</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#f58518]"></span>
+            <p class="text-2xl">Developing</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-4 rounded-full bg-[#bab0ac]"></span>
+            <p class="text-2xl">Not classified</p>
+          </div>
+
+        </div>
+
+        <p
+          class="tradeoff-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="3"
+        >
+          But categories can hide culture. In Western and Southern Europe, social life may not only appear as “socialising.”
+        </p>
+
+
+        <p
+          class="tradeoff-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="4"
+        >
+          But categories can hide culture. In Western and Southern Europe, social life may not only appear as “socialising.”
+        </p>
+
+        <p
+          class="tradeoff-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="5"
+        >
+          When meals are added, another pattern appears: time spent eating may also carry social meaning, especially in cultures where eating together is part of daily life.
+        </p>
+      </div>
+    </section>
+    <script src="js/scatterClevelandPlot.js"></script>
+
+    <!-- Dataset explorer -->
+    <h2
+      class="mt-40 mb-10 text-center font-medium leading-none text-[clamp(2rem,5vw,5rem)]"
+    >
+      What does this mean for us?
+    </h2>
+
+    <section id="connections-section" class="relative min-h-[300vh]">
+      <div class="sticky top-0 flex items-center justify-center">
+        <div id="connections-chart" class="relative w-full"></div>
+      </div>
+
+      <div class="relative z-30 -mt-[30vh] pb-[80vh] pointer-events-none">
+        <p
+          class="connections-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="0"
+        >
+          The point is not that certain activities tasks are bad. The problem is that we often do not notice how much time they quietly take.
+        </p>
+
+        <p
+          class="connections-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="1"
+        >
+          But at national scale, these small acts add up. If everyone in a country
+          spent just one more minute a day socializing, that would become millions
+          of extra hours of human connection every year.
+        </p>
+
+        <p
+          class="connections-step mx-auto mb-[80vh] w-[50vw] bg-white/90 px-8 py-6 text-center"
+          data-step="2"
+        >
+          A society is partly what it makes time for. This time-based view offers a
+          different way to assk what humanity is doing, and what we might choose to
+          do differently. How will you spend your time?
+        </p>
+      </div>
+    </section>
+    <script src="js/arcs.js"></script>
+
+    <!-- Dataset explorer -->
+    <h2
+      class="mt-40 mb-10 text-center font-medium leading-none text-[clamp(2rem,5vw,5rem)]"
+    >
+      Explore the dataset further!
+    </h2>
+    <section class="my-20">
+      <!-- Legend -->
+      <div class="mb-8 flex gap-[4vw] mx-auto w-fit"> 
+        <div class="flex items-center gap-2">
+          <span class="h-4 w-4 rounded-full bg-[#4c78a8]"></span>
+          <p class="text-2xl">Developed</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="h-4 w-4 rounded-full bg-[#f58518]"></span>
+          <p class="text-2xl">Developing</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="h-4 w-4 rounded-full bg-[#bab0ac]"></span>
+          <p class="text-2xl">Not classified</p>
+        </div>
+      </div>
+
+      <div class="mx-auto flex w-full flex-wrap items-center justify-center gap-6">
+        <label class="flex flex-col gap-1 text-2xl font-light ">
+          Category
+          <select
+            id="filter-category"
+            class="border border-black bg-white px-4 py-2 font-light"
+          ></select>
+        </label>
+
+        <label class="flex flex-col gap-1 text-2xl font-light">
+          Country
+          <select
+            id="filter-country"
+            class="border border-black bg-white px-4 py-2 font-light"
+          ></select>
+        </label>
+      </div>
+
+      <div id="dataset-explorer" class="relative w-full"></div>
+    </section>
+
+    <script src="js/datasetExplorer.js"></script>
+
+    <h2
+      class="mt-40 mb-10 text-center font-[350] leading-none text-2xl"
+    >
+      References
+    </h2>
+    <p class="text-2xl">Fajzel, W., et al. (2023) ‘The global human day’, Proceedings of the National Academy of Sciences of the United States of America, 120(25), e2219564120. doi:10.1073/pnas.2219564120.</p>
+    <p class="text-2xl">World Bank (2026) Population, total (SP.POP.TOTL). World Development Indicators. Available at: https://databank.worldbank.org/metadataglossary/world-development-indicators/series/SP.POP.TOTL (Accessed: 2 June 2026).</p>
+    <p class="text-2xl">World Bank (2026) World Bank Country and Lending Groups. Available at: https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups (Accessed: 2 June 2026).</p>
+    <p class="text-2xl">International Organization for Standardization (n.d.) ISO 3166 Country Codes. Available at: https://www.iso.org/iso-3166-country-codes.html (Accessed: 2 June 2026). </p>
+  </body>
+</html>
