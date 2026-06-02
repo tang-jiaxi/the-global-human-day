@@ -6,7 +6,8 @@ const chart = d3.select("#chart");
 const svg = chart
   .append("svg")
   .attr("viewBox", `0 0 ${width} ${height}`)
-  .attr("class", "absolute inset-0 h-full w-full");
+  .attr("class", "absolute inset-0 h-full w-full")
+  .style("pointer-events", "none");
 
 const color = d3.scaleOrdinal(d3.schemeTableau10);
 
@@ -50,16 +51,13 @@ d3.csv("global_human_day.csv", d3.autoType).then((data) => {
     .attr("class", "treemap-rect")
     .attr("width", (d) => d.x1 - d.x0)
     .attr("height", (d) => d.y1 - d.y0)
-    .attr("rx", 8)
+    .attr("rx", (d) => (d.x1 - d.x0 < 20 ? 4 : 8))
     .attr("fill", (d) => color(d.data.name))
     .attr("opacity", 0.9)
     .style("cursor", "pointer")
+    .attr("pointer-events", "all")
     .on("mouseenter", function (event, d) {
-      d3.select(this)
-        .attr("opacity", 1)
-        .attr("stroke", "#111")
-        .attr("stroke-width", 2)
-        .raise();
+      d3.select(this).attr("opacity", 1).raise();
 
       tooltip
         .style("display", "block")
@@ -86,28 +84,49 @@ d3.csv("global_human_day.csv", d3.autoType).then((data) => {
     .selectAll(".treemap-label")
     .data(root.leaves())
     .join("div")
-    .attr(
-      "class",
-      "treemap-label absolute overflow-hidden p-3 pointer-events-none",
-    )
+    .attr("class", "treemap-label absolute overflow-hidden pointer-events-none")
+    .style("pointer-events", "none")
     .style("left", (d) => `${(d.x0 / width) * 100}%`)
     .style("top", (d) => `${(d.y0 / height) * 100}%`)
     .style("width", (d) => `${((d.x1 - d.x0) / width) * 100}%`)
     .style("height", (d) => `${((d.y1 - d.y0) / height) * 100}%`)
+    .style("display", "flex")
+    .style("flex-direction", "column")
+    .style("align-items", "flex-start")
+    .style("justify-content", (d) => {
+      const rectHeight = d.y1 - d.y0;
+
+      return rectHeight < 80 ? "center" : "flex-start";
+    })
+    .style("padding", (d) => {
+      const rectHeight = d.y1 - d.y0;
+
+      return rectHeight < 80 ? "0 12px" : "12px";
+    })
     .html((d) => {
       const rectWidth = d.x1 - d.x0;
       const rectHeight = d.y1 - d.y0;
 
       if (rectWidth < 75 || rectHeight < 50) return "";
 
+      const titleSize = Math.min(rectWidth / 5, rectHeight / 4);
+      const valueSize = Math.min(rectWidth / 8, rectHeight / 5);
+
       return `
-        <div class="font-medium leading-tight text-black text-medium">
-          ${formatLabel(d.data.name)}
-        </div>
-        <div class="mt-0.5 font-light leading-tight text-black/80 text-medium">
-          ${Math.round(d.data.value * 60)} min/day
-        </div>
-      `;
+      <div
+        class="font-medium leading-tight text-black"
+        style="font-size: clamp(14px, ${titleSize}px, 30px);"
+      >
+        ${formatLabel(d.data.name)}
+      </div>
+
+      <div
+        class="mt-0.5 font-light leading-tight text-black/80"
+        style="font-size: clamp(12px, ${valueSize}px, 20px);"
+      >
+        ${Math.round(d.data.value * 60)} min/day
+      </div>
+    `;
     });
 });
 
