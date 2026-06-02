@@ -6,8 +6,6 @@ Live site: https://git.arts.ac.uk/pages/j-tang1120251/the-global-human-day/<br/>
 Backup site: https://tang-jiaxi.github.io/the-global-human-day/<br/>
 Demo video: https://www.loom.com/share/593f70f24b1748248a3bd429deb20819
 
-Alternatively, you may clone this repository and run a live server on the `index.html` page to view the website.
-
 ## Project overview
 
 This project was created for the Computational Practices: Visualisation and Sensing unit at the University of Arts London. It uses data visualisation and scrollytelling to guide viewers through a narrative about how humanity spends time, from global averages to country-level comparisons.
@@ -47,4 +45,5 @@ The project is automatically deployed as a static website using GitHub Actions a
 
 ## Viewing notes
 
-The final visualisation is best viewed fullscreen on a laptop or desktop browser. 
+The final visualisation is best viewed fullscreen on a laptop or desktop browser. Alternatively, you may clone this repository and run a live server on the `index.html` page to view the website.
+
