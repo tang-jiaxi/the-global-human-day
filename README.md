@@ -20,6 +20,9 @@ The visualisation begins with an overview of the global human day, then explores
 * `global_human_day.csv`
   Dataset containing the global average time spent on different daily activity subcategories.
 
+* `all_countries.csv`
+  Original country-level dataset.
+  
 * `all_countries_extended.csv`
   Extended country-level dataset used for the interactive visualisations. This includes activity time, country names, ISO codes, population, GDP per capita, and economic status classification.
 
