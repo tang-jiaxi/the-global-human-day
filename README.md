@@ -2,7 +2,8 @@
 
 A scrollytelling infographic article exploring how people around the world spend their 24 hours. The project uses the [The Global Human Day](https://zenodo.org/records/7941615) dataset to visualise global time use across countries, regions, activities, and economic classifications.
 
-Live site: https://tang-jiaxi.github.io/the-global-human-day/<br/>
+Live site: https://git.arts.ac.uk/pages/j-tang1120251/the-global-human-day/<br/>
+Backup site: https://tang-jiaxi.github.io/the-global-human-day/<br/>
 Demo video: https://www.loom.com/share/593f70f24b1748248a3bd429deb20819
 
 ## Project overview
