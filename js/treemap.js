@@ -101,10 +101,10 @@ d3.csv("global_human_day.csv", d3.autoType).then((data) => {
       if (rectWidth < 75 || rectHeight < 50) return "";
 
       return `
-        <div class="font-medium leading-tight text-black text-large">
+        <div class="font-medium leading-tight text-black text-medium">
           ${formatLabel(d.data.name)}
         </div>
-        <div class="mt-1 font-light leading-tight text-black/80 text-medium">
+        <div class="mt-0.5 font-light leading-tight text-black/80 text-medium">
           ${Math.round(d.data.value * 60)} min/day
         </div>
       `;
